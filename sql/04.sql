@@ -7,23 +7,23 @@
  */
 
 -- Find actors in AMERICAN CIRCUS
-WITH am_circus_actors AS (
-        SELECT actor_id, film_id
-        FROM film_actor
-        WHERE film_actor.film_id IN (
-                SELECT film_id 
-                FROM film 
-                WHERE title= 'AMERICAN CIRCUS'
-                )
+WITH ac_actors AS (
+    SELECT actor_id, film_id
+    FROM film_actor
+    WHERE film_actor.film_id IN (
+            SELECT film_id 
+            FROM film 
+            WHERE title= 'AMERICAN CIRCUS'
+    )
 ),
 
 -- Find film_ids with 2 or more actors from AMERICAN CIRCUS 
 films_with_2_or_more_ac_actors AS (
-        SELECT film_actor.film_id
-        FROM am_circus_actors
-        JOIN film_actor USING(actor_id)
-        GROUP BY film_actor.film_id
-        HAVING COUNT(am_circus_actors.actor_id) >= 2
+    SELECT film_actor.film_id
+    FROM ac_actors
+    JOIN film_actor USING (actor_id)
+    GROUP BY film_actor.film_id
+    HAVING COUNT(ac_actors.actor_id) >= 2
 )
 
 -- Only select film titles with the above query criteria met 
