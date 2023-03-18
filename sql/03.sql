@@ -7,25 +7,25 @@
 
 -- Actors that have appeared in "Children" category films
 WITH c_actors AS (
-    SELECT actor.first_name, actor.last_name, actor.actor_id
-    FROM actor, film, film_actor, film_category, category
-    WHERE actor.actor_id = film_actor.actor_id
-        AND film_actor.film_id = film.film_id
-        AND film.film_id = film_category.film_id
-        AND film_category.category_id = category.category_id
-        AND category.name = 'Children'
+    SELECT first_name, last_name, actor_id
+    FROM actor
+        JOIN film_actor USING (actor_id)
+        JOIN film USING (film_id)
+        JOIN film_category USING (film_id)
+        JOIN category using (category_id)
+    WHERE category.name = 'Children'
     ORDER BY last_name, first_name
 ),
 
 -- Actors that have appeared in "Horror" category films
 h_actors AS (
-    SELECT actor.first_name, actor.last_name, actor.actor_id
-    FROM actor, film, film_actor, film_category, category
-    WHERE actor.actor_id = film_actor.actor_id
-        AND film_actor.film_id = film.film_id
-        AND film.film_id = film_category.film_id
-        AND film_category.category_id = category.category_id
-        AND category.name = 'Horror'
+    SELECT first_name, last_name, actor_id
+    FROM actor
+        JOIN film_actor USING (actor_id)
+        JOIN film USING (film_id)
+        JOIN film_category USING (film_id)
+        JOIN category using (category_id)
+    WHERE category.name = 'Horror'
     ORDER BY last_name, first_name
 )
 
