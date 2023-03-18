@@ -20,7 +20,7 @@ WITH film_ids_no_f_titles AS (
     WHERE title NOT ILIKE '%f%'
 ),
 
--- (2) Films with no 'f's in their actor's first or last names
+-- (2) Films with no 'f's in their actors' first or last names
 film_ids_no_f_actors AS (
     SELECT DISTINCT film_id 
     FROM film_actor
@@ -29,7 +29,7 @@ film_ids_no_f_actors AS (
         AND last_name NOT ILIKE '%f%'
 ),
 
--- (3) Films with no 'f's in their customer's first or last names
+-- (3) Films with no 'f's in their customers' first or last names
 film_ids_no_f_customers AS (
     SELECT DISTINCT film_id
     FROM inventory
@@ -55,14 +55,13 @@ film_ids_no_f_addresses AS (
         AND country NOT ILIKE '%f%'
 )
 
--- Select only films that appear in ALL four queries above
+-- Select only films that appear in ALL four queries above, inner join them
 SELECT DISTINCT title
 FROM film
 JOIN film_ids_no_f_titles USING (film_id)
 JOIN film_ids_no_f_actors USING (film_id)
 JOIN film_ids_no_f_customers USING (film_id)
 JOIN film_ids_no_f_addresses USING (film_id)
-ORDER BY title
-;
+ORDER BY title;
 
 
